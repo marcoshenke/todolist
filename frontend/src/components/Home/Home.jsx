@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { fetchTasks } from '../../services'
+import {Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Box, Button  }  from '@mui/material'
 
 const Home = () => {
 
@@ -29,22 +30,36 @@ const Home = () => {
 	return (
 		<div className="app">
 			<h1>Lista de Tarefas</h1>
-			<div className="todo-list">
-				{
-					todos?.map((todo) => (
-						<div className="todo" key={todo?.id}>
-							<div className="content">
-								<p>{todo?.title}</p>
-								<p>{todo?.status}</p>
-							</div>
-							<div>
-								<button>Completar</button>
-								<button>X</button>
-							</div>
-						</div>
-					))
-				}
-			</div>
+			<TableContainer component={Paper}>
+				<Table sx={{ minWidth: 650 }} aria-label="simple table">
+					<TableHead>
+						<TableRow>
+							<TableCell align="center">Título</TableCell>
+							<TableCell align="center">status</TableCell>
+							<TableCell align="center">Ações</TableCell>
+						</TableRow>
+					</TableHead>
+					<TableBody>
+						{todos?.map((row) => (
+							<TableRow
+								key={row?.id}
+								sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+							>
+								<TableCell align="center">
+									{row?.title}
+								</TableCell>
+								<TableCell align="center">{row?.status}</TableCell>
+								<TableCell align='center'>
+									<Box >
+										<Button >Completar</Button>
+										<Button className='Buttons'>Excluir</Button>
+									</Box>									
+								</TableCell>
+							</TableRow>
+						))}
+					</TableBody>
+				</Table>
+			</TableContainer>
 		</div>
 	)
 }
